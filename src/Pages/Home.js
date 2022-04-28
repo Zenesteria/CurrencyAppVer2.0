@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import Loader from '../Components/Loader';
 // import CurrencyOptions from '../Components/CurrencyOptions'
 
 export default function Home() {
-  const [fetchedData, setFetchedData] = useState(false);
+  
+  const [data, setData] = useState({
+    error:false,
+    loading:false
+  });
+
   // const [currencyList, setCurrencyList] = useState([['STN','São Tomé and Príncipe dobra'],['XAG','Silver (troy ounce)'],['NGN','Nigerian naira'],['USD','United States dollar']])
   const [currencyList, setCurrencyList] = useState([])
   const [currentRate, setCurrentRate ] = useState({
@@ -18,27 +24,34 @@ export default function Home() {
 
 
   const fetchCurrencies = async () => {
-    
-    if(!currencyList.length > 0){
       const res = await axios.get('https://api.getgeoapi.com/v2/currency/list?api_key=f17a2910c0dc34239638ab8e32a478db6d9a1a4b&format=json')
-      const data = res.data
+      const data = res.data;
       setCurrencyList(Object.entries(data.currencies).sort());
-    }
   }
 
   const fetchRates = async (from,to) => {
+    setData({
+      error:false,
+      loading:true
+    });
     const res = await axios.get(`https://api.getgeoapi.com/v2/currency/historical/2022-04-27?api_key=f17a2910c0dc34239638ab8e32a478db6d9a1a4b&from=${from}&to=${to}`)
     const data = res.data
     const rate = Object.values(data.rates)[0].rate
-    setCurrentRate({
-      baseCode:data.base_currency_code,
-      baseName:data.base_currency_name,
-      targetCode:Object.keys(data.rates)[0],
-      targetName:Object.values(data.rates)[0].currency_name,
-      rate:Number(rate),
-      amt:1,
-      rate_for_amt:1*Number(rate)
-    })
+    setCurrentRate((prevValue) => {
+        return {
+          baseCode:data.base_currency_code,
+          baseName:data.base_currency_name,
+          targetCode:Object.keys(data.rates)[0],
+          targetName:Object.values(data.rates)[0].currency_name,
+          rate:Number(rate),
+          amt:prevValue.amt,
+          rate_for_amt:prevValue.amt*Number(rate)
+        }
+    });
+    setData({
+      error:false,
+      loading:false
+    });
   }
 
   const handleBaseInputChange = (e) => {
@@ -78,16 +91,14 @@ export default function Home() {
     fetchRates(currentRate.baseCode, (e.target.value).split('-')[0])
   }
 
-  useEffect(() => {
-      console.log(fetchedData)
-  })
 
-  if(!fetchedData){
-    console.log('fetching');
-    fetchCurrencies();
-    fetchRates('NGN','USD');
-    setFetchedData(true)
-  }
+  useEffect(() => {
+    if(currencyList.length === 0){
+      console.log('fetching');
+      fetchCurrencies();
+      fetchRates('NGN','USD');
+    }
+  })
 
   return (
     <div className='w-full h-screen relative flex flex-col items-center justify-center'>
@@ -98,8 +109,9 @@ export default function Home() {
         </header>
 
 
-        <div className="bg-[rgb(255,255,255)] shadow-xl p-5 rounded-md" style={{width:'min(90%, 1000px)'}}>
-            <form action="" className='flex flex-col items-center'>
+        <div className="flex items-center justify-center shadow-xl p-5 rounded-md min-h-[350px]" style={{width:'min(90%, 1000px)',backgroundColor:data.loading ? 'rgb(240,240,240)' : 'white'}}>
+            <Loader show={data.loading ? true : false}/>
+            <form action="" className='flex-col items-center w-full' style={{display: data.loading ? 'none' : 'flex'}}>
 
                 <section className='w-full h-fit mb-10'>
                     <p className='text-[0.8rem] text-gray-400 mb-1'>Amount</p>
