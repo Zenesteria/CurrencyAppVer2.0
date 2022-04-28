@@ -109,7 +109,7 @@ export default function Home() {
         </header>
 
 
-        <div className="flex items-center justify-center shadow-xl p-5 rounded-md min-h-[350px]" style={{width:'min(90%, 1000px)',backgroundColor:data.loading ? 'rgb(240,240,240)' : 'white'}}>
+        <div className="flex items-center justify-center shadow-xl p-5 rounded-md min-h-[350px]" style={{width:'min(90%, 800px)',backgroundColor:data.loading ? 'rgb(245,245,245)' : 'white'}}>
             <Loader show={data.loading ? true : false}/>
             <form action="" className='flex-col items-center w-full' style={{display: data.loading ? 'none' : 'flex'}}>
 
