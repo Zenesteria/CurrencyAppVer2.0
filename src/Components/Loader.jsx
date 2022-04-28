@@ -11,5 +11,5 @@ export default function Loader({show}) {
 }
 
 const BarsOne = ({name}) => {
-    return <div className="w-[120%] h-[15px] bg-red-300" id={name} ></div>
+      return <div className="w-[120%] h-[15px] bg-[rgb(9,36,76)]" id={name} ></div>
 }

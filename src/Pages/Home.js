@@ -102,44 +102,46 @@ export default function Home() {
 
   return (
     <div className='w-full h-screen relative flex flex-col items-center justify-center'>
-        <div className="absolute top-0 left-0 w-full h-[50%] bg-[rgb(27,70,135)] z-[-1]"></div>
-        <header className="mb-5 text-white font-bold leading-[3rem]" style={{fontSize:'calc(0.7rem + 1.5vw)',width:'min(90%, 800px)'}}>
+        <div className="absolute top-0 left-0 w-full h-[50%] bg-[rgb(9,36,76)] border-b-[2px] border-[rgb(114,253,255)]"></div>
+        <header className="mb-5 z-20 text-white glow md:leading-[3rem] text-center" style={{fontSize:'calc(0.7rem + 1.5vw)',width:'min(90%, 800px)'}}>
             <h1><span className='text-[rgb(119,246,229)]'>{currentRate.amt.toLocaleString('ja-JP',{ style: 'currency', currency: `${currentRate.baseCode}`})} </span>{`${currentRate.baseName} to ${currentRate.targetName}.`}</h1>
             <h2>Convert {`${currentRate.baseCode}`} to {currentRate.targetCode} at the real exchange rate</h2>
         </header>
 
 
-        <div className="flex items-center justify-center shadow-xl p-5 rounded-md min-h-[350px]" style={{width:'min(90%, 800px)',backgroundColor:data.loading ? 'rgb(245,245,245)' : 'white'}}>
-            <Loader show={data.loading ? true : false}/>
-            <form action="" className='p-2 flex-col items-center w-fit' style={{display: data.loading ? 'none' : 'flex'}}>
+        <div className="w-fit h-fit afterglowcont">
+          <div className="relative w-fit min-w-[330px] flex items-center z-50 justify-center shadow-xl p-2 lg:p-5 rounded-md min-h-[350px] duration-700 afterglow" style={{backgroundColor:data.loading ? 'rgb(245,245,245)' : 'white'}}>
+              <Loader show={data.loading ? true : false}/>
+              <form className='p-2 flex-col items-center w-fit' style={{display: data.loading ? 'none' : 'flex'}}>
 
-                <section className='w-full h-fit mb-10'>
-                    <p className='text-[0.8rem] text-gray-400 mb-1'>Amount</p>
-                    <div className="flex w-full items-center">
-                        <input type="text" name='base_currency_value' className='h-[7vh] min-h-[55px] border-[1px] border-[rgb(187,187,187)] p-2' value={currentRate.amt} onChange={handleBaseInputChange}/>
-                        <select className='p-4 bg-[rgb(50,54,82)] max-w-[100px] text-white' name='base_currency' value={`${currentRate.baseCode}-${currentRate.baseName}`} onChange={handleBaseCurrencyChange}>
-                            {currencyList.map((currency, index) => {
-                                return <option key={index} value={`${currency[0]}-${currency[1]}`}>{`${currency[0]} - ${currency[1]}`}</option>
-                            })}
-                        </select>
-                    </div>
-                </section>
+                  <section className='w-full h-fit mb-10 z-30'>
+                      <p className='text-[0.8rem] text-gray-400 mb-1 p-animate'>Amount</p>
+                      <div className="flex w-full items-center">
+                          <input type="text" name='base_currency_value' className='flex-1 h-[7vh] min-h-[55px] border-b-[1px] border-[rgb(187,187,187)] p-2' value={currentRate.amt} onChange={handleBaseInputChange} autoComplete='off'/>
+                          <select className='p-4 bg-[rgb(50,54,82)] max-w-[100px] text-white' name='base_currency' value={`${currentRate.baseCode}-${currentRate.baseName}`} onChange={handleBaseCurrencyChange}>
+                              {currencyList.map((currency, index) => {
+                                  return <option key={index} value={`${currency[0]}-${currency[1]}`}>{`${currency[0]} - ${currency[1]}`}</option>
+                              })}
+                          </select>
+                      </div>
+                  </section>
 
-                <section className='w-full h-fit'>
-                    <p className='text-[0.8rem] text-gray-400 mb-1'>Converted To</p>
-                    <div className="flex w-full items-center">
-                        <input type="text" name='target_currency_value' className='h-[7vh] min-h-[55px] border-[2px] border-[rgb(145,145,145)] p-2' value={(currentRate.rate_for_amt)} onChange={handleTargetInputChange}/>
-                        <select className='p-4 bg-[rgb(50,54,82)] max-w-[100px] text-white' value={`${currentRate.targetCode}-${currentRate.targetName}`} name='target_currency' onChange={handleTargetCurrencyChange}>
-                            {currencyList.map((currency, index) => {
-                                return <option key={index} value={`${currency[0]}-${currency[1]}`}>{`${currency[0]} - ${currency[1]}`}</option>
-                            })}
-                        </select>
-                    </div>
-                </section>
-                <h1 className='mt-4 font-semibold' style={{fontSize:'calc(0.9rem + 1vw)'}}>1.00000 {currentRate.baseCode} = <span className='text-green-600'>{`${currentRate.rate} ${currentRate.targetCode}`}</span>{currentRate.target}</h1>
-                <p className='' style={{fontSize:'calc(0.6rem + 0.7vw)'}}>updated</p>
+                  <section className='w-full h-fit z-30'>
+                      <p className='text-[0.8rem] text-gray-400 mb-1'>Converted To</p>
+                      <div className="flex w-full items-center">
+                          <input type="text" name='target_currency_value' className='flex-1 h-[7vh] min-h-[55px] border-b-[1px] border-[rgb(145,145,145)] p-2' value={(currentRate.rate_for_amt)} onChange={handleTargetInputChange} autoComplete='off'/>
+                          <select className='p-4 bg-[rgb(50,54,82)] max-w-[100px] text-white' value={`${currentRate.targetCode}-${currentRate.targetName}`} name='target_currency' onChange={handleTargetCurrencyChange}>
+                              {currencyList.map((currency, index) => {
+                                  return <option key={index} value={`${currency[0]}-${currency[1]}`}>{`${currency[0]} - ${currency[1]}`}</option>
+                              })}
+                          </select>
+                      </div>
+                  </section>
+                  <h1 className='mt-4 font-semibold' style={{fontSize:'calc(0.9rem + 1vw)'}}>1.00000 {currentRate.baseCode} = <span className='text-cyan-500'>{`${currentRate.rate} ${currentRate.targetCode}`}</span>{currentRate.target}</h1>
+                  <p className='' style={{fontSize:'calc(0.6rem + 0.7vw)'}}>updated</p>
 
-            </form>
+              </form>
+          </div>
         </div>
     </div>
   )

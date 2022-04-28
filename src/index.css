@@ -3,10 +3,15 @@
 @tailwind components;
 
 *{
-  margin: o;
-  border: 0;
+  transition: all .7s ease;
   box-sizing: border-box;
 }
+
+
+body{
+  background-color: rgb(101, 124, 179);
+}
+
 
 
 #topbar{
@@ -21,6 +26,33 @@
 #botbar{
   transform: translateX(-10%);
   animation: topbar .8s ease-in-out infinite alternate;
+}
+
+.glow{
+  text-shadow: 0px 0px 10px rgb(190, 246, 255);
+}
+
+.afterglow{
+  border-top-left-radius: 4rem;
+  border-bottom-right-radius: 4rem;
+}
+
+.afterglow:hover{
+  box-shadow: 0 10px 10px rgba(207, 253, 255, 0.325);
+  transform: scale(1.02);
+}
+
+
+
+
+section input[type='text']:focus{
+  outline: none;
+  box-shadow: 0 0 5px rgba(114, 159, 255, 0.428);
+  border-bottom: 0;
+}
+
+section input[type='text']:focus > .p-animate{
+  color: red;
 }
 
 
