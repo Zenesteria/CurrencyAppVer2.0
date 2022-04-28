@@ -116,8 +116,8 @@ export default function Home() {
                 <section className='w-full h-fit mb-10'>
                     <p className='text-[0.8rem] text-gray-400 mb-1'>Amount</p>
                     <div className="flex w-full items-center">
-                        <input type="text" name='base_currency_value' className='flex-[0.8] h-[7vh] min-h-[55px] border-[1px] border-[rgb(187,187,187)] p-2' value={currentRate.amt} onChange={handleBaseInputChange}/>
-                        <select className='flex-[0.3] p-4 bg-[rgb(50,54,82)] max-w-[100px] text-white' name='base_currency' value={`${currentRate.baseCode}-${currentRate.baseName}`} onChange={handleBaseCurrencyChange}>
+                        <input type="text" name='base_currency_value' className='flex-[1] h-[7vh] min-h-[55px] border-[1px] border-[rgb(187,187,187)] p-2' value={currentRate.amt} onChange={handleBaseInputChange}/>
+                        <select className='p-4 bg-[rgb(50,54,82)] max-w-[100px] text-white' name='base_currency' value={`${currentRate.baseCode}-${currentRate.baseName}`} onChange={handleBaseCurrencyChange}>
                             {currencyList.map((currency, index) => {
                                 return <option key={index} value={`${currency[0]}-${currency[1]}`}>{`${currency[0]} - ${currency[1]}`}</option>
                             })}
@@ -128,8 +128,8 @@ export default function Home() {
                 <section className='w-full h-fit'>
                     <p className='text-[0.8rem] text-gray-400 mb-1'>Converted To</p>
                     <div className="flex w-full items-center">
-                        <input type="text" name='target_currency_value' className='flex-[0.8] h-[7vh] min-h-[55px] border-[1px] border-[rgb(187,187,187)] p-2' value={(currentRate.rate_for_amt)} onChange={handleTargetInputChange}/>
-                        <select className='flex-[0.3] p-4 bg-[rgb(50,54,82)] max-w-[100px] text-white' value={`${currentRate.targetCode}-${currentRate.targetName}`} name='target_currency' onChange={handleTargetCurrencyChange}>
+                        <input type="text" name='target_currency_value' className='flex-1 h-[7vh] min-h-[55px] border-[1px] border-[rgb(187,187,187)] p-2' value={(currentRate.rate_for_amt)} onChange={handleTargetInputChange}/>
+                        <select className='p-4 bg-[rgb(50,54,82)] max-w-[100px] text-white' value={`${currentRate.targetCode}-${currentRate.targetName}`} name='target_currency' onChange={handleTargetCurrencyChange}>
                             {currencyList.map((currency, index) => {
                                 return <option key={index} value={`${currency[0]}-${currency[1]}`}>{`${currency[0]} - ${currency[1]}`}</option>
                             })}
@@ -137,7 +137,7 @@ export default function Home() {
                     </div>
                 </section>
                 <h1 className='mt-4 font-semibold' style={{fontSize:'calc(0.9rem + 1vw)'}}>1.00000 {currentRate.baseCode} = <span className='text-green-600'>{`${currentRate.rate} ${currentRate.targetCode}`}</span>{currentRate.target}</h1>
-                <p className='' style={{fontSize:'calc(0.6rem + 0.7vw)'}}>Mid-market exchange rate at 19:29 UTC</p>
+                <p className='' style={{fontSize:'calc(0.6rem + 0.7vw)'}}>updated</p>
 
             </form>
         </div>
